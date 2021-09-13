@@ -1,1 +1,28 @@
-/* Your code here */
+body{
+text-align: center;
+font-size: 200%;
+background-image: url("https://www.freepik.com/free-photo/abstract-smoke-wallpaper-background-desktop_17581093.htm#page=1&query=Background&position=9");
+background-color: #b9992d;
+}
+
+.album-art{
+    border-radius: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5%;
+    margin-top: 2%;
+    width: 25%;
+    border: 3px solid rgb(26, 167, 136);
+    padding: 2px;
+    align-items: center;
+}
+
+.now-playing{
+    background-color: rgb(5, 58, 58);
+    
+}
+span{
+    margin-right: 2%;
+}
+
