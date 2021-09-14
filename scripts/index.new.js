@@ -79,7 +79,20 @@ function createPlaylistElement({ id, name, songs }) {
  * @param {Object} eventListeners - the event listeners on the element
  */
 function createElement(tagName, children = [], classes = [], attributes = {}, eventListeners = {}) {
-    // Your code here
+  const el = document.createElement(tagName);
+  // Children
+  for(const child of children) {
+      el.append(child);
+  }
+  // Classes
+  for(const cls of classes) {
+    el.classList.add(cls);
+  }
+  // Attributes
+  for (const attr in attributes) {
+    el.setAttribute(attr, attributes[attr]);
+  }
+  return el;
 }
 
 /**
