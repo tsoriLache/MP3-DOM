@@ -113,13 +113,18 @@ function handleSongClickEvent(event) {
  *
  * @param {MouseEvent} event - the click event
  */
-function handleAddSongEvent(event) {
+function handleAddSongEvent(event) {                            // works-need to be written better
   let title=document.getElementById("title").value
       ,album=document.getElementById("album").value
       ,artist=document.getElementById("artist").value
       ,duration=document.getElementById("duration").value
       ,coverArt=document.getElementById("cover-art").value
   addSong({title,album,artist,duration,coverArt})
+  document.getElementById("title").value=null;
+  document.getElementById("album").value=null;
+  document.getElementById("artist").value=null;
+  document.getElementById("duration").value=null;
+  document.getElementById("cover-art").value=null;
 }
 
 /**
@@ -131,9 +136,9 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
   const artistEl = createElement("span", [artist],["artist"]);
   const durationEl = createElement("span", ["" + secToDur(duration)] ,["duration", "short-duration"], {onclick: `console.log('${duration}')`});
   const imgEl = createElement("img", [] ,["album-art"], {src: coverArt});
-  const playEl = createElement("button",["▶"],["button"],{id:"playButton"});
-  const deleteEl = createElement("button",["❌"],["button"],{id:"deleteButton"});
-  return createElement("div", [nameEl,albumEl,"Artist: ", artistEl, "Duration: ", durationEl, imgEl,playEl,deleteEl],["song"],{id:id+"song", onclick: `playSong(${id})` });
+  const playEl = createElement("button",["▶"],["play-button"],{id:"playButton"});
+  const deleteEl = createElement("button",["❌"],["remove-button"],{id:"deleteButton"});
+  return createElement("div", [nameEl,albumEl,"Artist: ", artistEl, "Duration: ", durationEl, imgEl,playEl,deleteEl],["song"],{id:id+"song"});
 }
 /**
  * Creates a playlist DOM element based on a playlist object.
@@ -201,3 +206,12 @@ generatePlaylists(player)
 // Making the add-song-button actually do something
 document.getElementById("add-button").addEventListener("click", handleAddSongEvent)
 
+//Making the play and delete buttons actually do something
+document.getElementById("songs").addEventListener("click" , function(event) {      // works-need to be written better
+  if (event.target.className != "remove-button"){
+    if(event.target.className !="play-button")return;
+  } 
+  let song = event.target.closest(".song");
+  if(event.target.className === "remove-button") removeSong(parseInt(song.id.substring(0,1)))
+  if(event.target.className ==="play-button") playSong(parseInt(song.id.substring(0,1)))
+});
