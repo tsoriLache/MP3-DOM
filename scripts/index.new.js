@@ -95,7 +95,12 @@ function handleSongClickEvent(event) {
  * @param {MouseEvent} event - the click event
  */
 function handleAddSongEvent(event) {
-    // Your code here
+  let title=document.getElementById("title").value
+      ,album=document.getElementById("album").value
+      ,artist=document.getElementById("artist").value
+      ,duration=document.getElementById("duration").value
+      ,coverArt=document.getElementById("cover-art").value
+  addSong({title,album,artist,duration,coverArt})
 }
 
 /**
@@ -109,7 +114,6 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
   const imgEl = createElement("img", [] ,["album-art"], {src: coverArt});
   return createElement("div", [nameEl,albumEl,"Artist: ", artistEl, "Duration: ", durationEl, imgEl],["song"],{id:id+"song", onclick: `playSong(${id})` });
 }
-console.log(createSongElement(player.songs[0]))
 /**
  * Creates a playlist DOM element based on a playlist object.
  */
@@ -173,6 +177,5 @@ function generatePlaylists(player) {
 // Creating the page structure
 generateSongs(player)
 generatePlaylists(player)
-
 // Making the add-song-button actually do something
 document.getElementById("add-button").addEventListener("click", handleAddSongEvent)
