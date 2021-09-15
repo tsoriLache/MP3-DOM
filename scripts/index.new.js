@@ -8,6 +8,15 @@ function findSong(id,mPlayer=player){
   throw "ID not found";
 }
 
+function findPlaylist(id,mPlayer=player){ 
+  for(let Playlist of mPlayer.playlists){
+    if (Playlist.id===id){
+      return Playlist;
+    }
+  }
+  throw "ID not found";
+}
+
 function secToDur(sec){
   return((Math.floor(sec/60))<10? "0": "")+`${Math.floor(sec/60)}:` +((sec%60)<10? "0": "")+`${sec%60}`
 }
