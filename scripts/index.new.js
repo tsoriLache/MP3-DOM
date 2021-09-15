@@ -157,8 +157,8 @@ function generatePlaylists(player) {
 }
 
 // Creating the page structure
-generateSongs()
-generatePlaylists()
+generateSongs(player)
+generatePlaylists(player)
 
 // Making the add-song-button actually do something
 document.getElementById("add-button").addEventListener("click", handleAddSongEvent)
