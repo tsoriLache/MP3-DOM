@@ -61,7 +61,11 @@ function playlistDuration(id) {
  * @param {Number} songId - the ID of the song to remove
  */
 function removeSong(songId) {
-    // Your code here
+  player.songs.splice(player.songs.indexOf(findSong(songId)),1);
+  for(let playlist of player.playlists){
+    playlist.songs.splice(playlist.songs.indexOf(songId),1)
+  }
+  document.getElementById(songId+"song").remove();
 }
 
 /**
