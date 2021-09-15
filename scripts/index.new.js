@@ -1,3 +1,17 @@
+/*support functions */
+function findSong(id,mPlayer=player){ 
+  for(let song of mPlayer.songs){
+    if (song.id===id){
+      return song;
+    }
+  }
+  throw "ID not found";
+}
+
+function secToDur(sec){
+  return((Math.floor(sec/60))<10? "0": "")+`${Math.floor(sec/60)}:` +((sec%60)<10? "0": "")+`${sec%60}`
+}
+
 /**
  * Plays a song from the player.
  * Playing a song means changing the visual indication of the currently playing song.
@@ -47,13 +61,14 @@ function handleAddSongEvent(event) {
  * Creates a song DOM element based on a song object.
  */
 function createSongElement({ id, title, album, artist, duration, coverArt }) {
-    const children = []
-    const classes = []
-    const attrs = {}
-    const eventListeners = {}
-    return createElement("div", children, classes, attrs, eventListeners)
+  const nameEl=createElement("span", [title],["song-name"]);
+  const albumEl=createElement("span",[album],["album-name"])
+  const artistEl = createElement("span", [artist],["artist"]);
+  const durationEl = createElement("span", ["" + secToDur(duration)] ,["duration", "short-duration"], {onclick: `console.log('${duration}')`});
+  const imgEl = createElement("img", [] ,["album-art"], {src: coverArt});
+  return createElement("div", [nameEl,albumEl,"Artist: ", artistEl, "Duration: ", durationEl, imgEl],["song"],{id:id+"song", onclick: `playSong(${id})` });
 }
-
+console.log(createSongElement(player.songs[0]))
 /**
  * Creates a playlist DOM element based on a playlist object.
  */
