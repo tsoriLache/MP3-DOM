@@ -120,15 +120,21 @@ function createElement(tagName, children = [], classes = [], attributes = {}, ev
 /**
  * Inserts all songs in the player as DOM elements into the songs list.
  */
-function generateSongs() {
-    // Your code here
+const songEl=document.getElementById("songs") 
+function generateSongs(player) {
+  for(song of player.songs){
+    songEl.append(createSongElement(song));
+  }
 }
 
 /**
  * Inserts all playlists in the player as DOM elements into the playlists list.
  */
-function generatePlaylists() {
-    // Your code here
+const playListEl=document.getElementById("playlists")
+function generatePlaylists(player) {
+  for(playlist of player.playlists){
+    playListEl.append(createPlaylistElement(playlist));
+  }
 }
 
 // Creating the page structure
