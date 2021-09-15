@@ -112,7 +112,9 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
   const artistEl = createElement("span", [artist],["artist"]);
   const durationEl = createElement("span", ["" + secToDur(duration)] ,["duration", "short-duration"], {onclick: `console.log('${duration}')`});
   const imgEl = createElement("img", [] ,["album-art"], {src: coverArt});
-  return createElement("div", [nameEl,albumEl,"Artist: ", artistEl, "Duration: ", durationEl, imgEl],["song"],{id:id+"song", onclick: `playSong(${id})` });
+  const playEl = createElement("button",["▶"],["button"],{id:"playButton"});
+  const deleteEl = createElement("button",["❌"],["button"],{id:"deleteButton"});
+  return createElement("div", [nameEl,albumEl,"Artist: ", artistEl, "Duration: ", durationEl, imgEl,playEl,deleteEl],["song"],{id:id+"song", onclick: `playSong(${id})` });
 }
 /**
  * Creates a playlist DOM element based on a playlist object.
@@ -179,3 +181,4 @@ generateSongs(player)
 generatePlaylists(player)
 // Making the add-song-button actually do something
 document.getElementById("add-button").addEventListener("click", handleAddSongEvent)
+
