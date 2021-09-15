@@ -17,6 +17,12 @@ function findPlaylist(id,mPlayer=player){
   throw "ID not found";
 }
 
+let newSongId=10;
+function generateSongId(){
+  newSongId+=1;
+  return newSongId;
+}
+
 function secToDur(sec){
   return((Math.floor(sec/60))<10? "0": "")+`${Math.floor(sec/60)}:` +((sec%60)<10? "0": "")+`${sec%60}`
 }
@@ -61,8 +67,16 @@ function removeSong(songId) {
 /**
  * Adds a song to the player, and updates the DOM to match.
  */
-function addSong({ title, album, artist, duration, coverArt }) {
-    // Your code here
+ function addSong({ title, album, artist, duration, coverArt }) {
+  player.songs.push({
+      id: generateSongId(),
+      title: title,
+      album: album,
+      artist: artist,
+      duration: duration,
+      coverArt: coverArt
+  })
+  songEl.append(createSongElement(player.songs[player.songs.length-1]));
 }
 
 /**
