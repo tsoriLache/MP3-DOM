@@ -26,9 +26,19 @@ function playlistDuration(id) {
  *
  * @param {Number} songId - the ID of the song to play
  */
-function playSong(songId) {
-    // Your code here
-}
+ let lastSongPlayed;
+ function playSong(songId) {
+     try{
+     lastSongPlayed.classList.remove("now-playing");
+     }finally{
+     const songElement=document.getElementById(songId+"song")
+     const song=findSong(songId);
+     songElement.classList.add("now-playing");
+     setTimeout(()=>songElement.classList.remove("now-playing"),song.duration*1000);
+     setTimeout(()=>playSong(player.songs[(player.songs.indexOf(song)+1)].id),song.duration*1000);
+     lastSongPlayed=songElement;
+     }
+ }
 
 /**
  * Removes a song from the player, and updates the DOM to match.
