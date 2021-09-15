@@ -27,6 +27,20 @@ function secToDur(sec){
   return((Math.floor(sec/60))<10? "0": "")+`${Math.floor(sec/60)}:` +((sec%60)<10? "0": "")+`${sec%60}`
 }
 
+function durationToSeconds(duration){
+  checkDurationInput(duration)
+  return((parseInt(duration[0])*10)+parseInt(duration[1]))*60
+          +parseInt(duration[3]*10)+parseInt(duration[4])
+}
+
+function checkDurationInput(duration){   // checks digits(maximum is 59:59/minimum is 00:00),:,length.
+  if(0<=parseInt(duration[0])&&parseInt(duration[0])<6&&0<=parseInt(duration[1])&&parseInt(duration[1])<=9
+    &&duration[2]===":"&&0<=parseInt(duration[3])&&parseInt(duration[3])<6&&0<=parseInt(duration[4])
+    &&parseInt(duration[4])<=9&&duration.length===5){
+      return true
+    }else throw 'Duration is not in the correct format...This is the format-"mm:ss" (for example 03:13)'
+}
+
 function playlistDuration(id) {
   let plDuration=0;
   for(let songID of findPlaylist(id).songs){
@@ -72,12 +86,13 @@ function removeSong(songId) {
  * Adds a song to the player, and updates the DOM to match.
  */
  function addSong({ title, album, artist, duration, coverArt }) {
+  checkDurationInput(duration)
   player.songs.push({
       id: generateSongId(),
       title: title,
       album: album,
       artist: artist,
-      duration: duration,
+      duration: durationToSeconds(duration),
       coverArt: coverArt
   })
   songEl.append(createSongElement(player.songs[player.songs.length-1]));
