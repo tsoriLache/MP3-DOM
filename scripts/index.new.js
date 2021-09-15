@@ -12,6 +12,14 @@ function secToDur(sec){
   return((Math.floor(sec/60))<10? "0": "")+`${Math.floor(sec/60)}:` +((sec%60)<10? "0": "")+`${sec%60}`
 }
 
+function playlistDuration(id) {
+  let plDuration=0;
+  for(let songID of findPlaylist(id).songs){
+    plDuration+=(findSong(songID).duration);
+  }
+  return (plDuration);          
+}
+
 /**
  * Plays a song from the player.
  * Playing a song means changing the visual indication of the currently playing song.
@@ -73,11 +81,10 @@ console.log(createSongElement(player.songs[0]))
  * Creates a playlist DOM element based on a playlist object.
  */
 function createPlaylistElement({ id, name, songs }) {
-    const children = []
-    const classes = []
-    const attrs = {}
-    const eventListeners = {}
-    return createElement("div", children, classes, attrs, eventListeners)
+  const nameEl=createElement("span", [name,":"],["playlist-name"]);
+  const quantityEl=createElement("span",[songs.length],["num-of-song"])
+  const attrs = {id:id+"pl"}
+  return createElement("div", [nameEl,"Number Of Songs:",quantityEl,"Playlist Duration:",secToDur(playlistDuration(id))], ["playlist"],attrs)
 }
 
 /**
