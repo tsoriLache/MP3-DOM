@@ -125,8 +125,13 @@ function removeSong(songId) {
  *
  * @param {MouseEvent} event - the click event
  */
-function handleSongClickEvent(event) {
-    // Your code here
+function handleSongClickEvent(event) {      // works-need to be written better
+  if (event.target.className != "remove-button"){
+    if(event.target.className !="play-button")return;
+  } 
+  let song = event.target.closest(".song");
+  if(event.target.className === "remove-button") removeSong(parseInt(song.id.substring(0,1)))
+  if(event.target.className ==="play-button") playSong(parseInt(song.id.substring(0,1)))
 }
 
 /**
@@ -228,14 +233,7 @@ generatePlaylists(player)
 document.getElementById("add-button").addEventListener("click", handleAddSongEvent)
 
 //Making the play and delete buttons actually do something
-document.getElementById("songs").addEventListener("click" , function(event) {      // works-need to be written better
-  if (event.target.className != "remove-button"){
-    if(event.target.className !="play-button")return;
-  } 
-  let song = event.target.closest(".song");
-  if(event.target.className === "remove-button") removeSong(parseInt(song.id.substring(0,1)))
-  if(event.target.className ==="play-button") playSong(parseInt(song.id.substring(0,1)))
-});
+document.getElementById("songs").addEventListener("click" ,handleSongClickEvent );
 
 
 // generatePlaylists(player)
