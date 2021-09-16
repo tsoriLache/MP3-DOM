@@ -57,6 +57,17 @@ function updatePlaylist(){
   generatePlaylists(player);
 }
 
+function sortByTitle(a, b) {
+  let titleA = a.title.toUpperCase(); 
+  let titleB = b.title.toUpperCase(); 
+  if (titleA < titleB) {
+    return -1;
+  }
+  if (titleA > titleB) {
+    return 1;
+  }
+}
+
 /**
  * Plays a song from the player.
  * Playing a song means changing the visual indication of the currently playing song.
@@ -195,7 +206,7 @@ function createElement(tagName, children = [], classes = [], attributes = {}, ev
  */
 const songEl=document.getElementById("songs") 
 function generateSongs(player) {
-  for(song of player.songs){
+  for(song of player.songs.sort(sortByTitle)){
     songEl.append(createSongElement(song));
   }
 }
