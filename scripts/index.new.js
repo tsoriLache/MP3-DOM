@@ -83,9 +83,10 @@ function updatePlaylist(){
  * @param {Number} songId - the ID of the song to remove
  */
 function removeSong(songId) {
-  player.songs.splice(player.songs.indexOf(findSong(songId)),1);
+  console.log(player.songs.splice(player.songs.indexOf(findSong(songId)),1));
   for(let playlist of player.playlists){
-    playlist.songs.splice(playlist.songs.indexOf(songId),1)
+    const songIndex=playlist.songs.indexOf(songId);
+    songIndex>=0? playlist.songs.splice(songIndex,1) :songId;
   }
   document.getElementById(songId+"song").remove();
   updatePlaylist();
