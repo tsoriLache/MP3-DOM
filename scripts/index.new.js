@@ -49,6 +49,14 @@ function playlistDuration(id) {
   return (plDuration);          
 }
 
+function updatePlaylist(){
+  const list = document.getElementById("playListList");
+  while (list.hasChildNodes()) {  
+    list.removeChild(list.firstChild);
+  }
+  generatePlaylists(player);
+}
+
 /**
  * Plays a song from the player.
  * Playing a song means changing the visual indication of the currently playing song.
@@ -80,6 +88,7 @@ function removeSong(songId) {
     playlist.songs.splice(playlist.songs.indexOf(songId),1)
   }
   document.getElementById(songId+"song").remove();
+  updatePlaylist();
 }
 
 /**
@@ -147,7 +156,7 @@ function createPlaylistElement({ id, name, songs }) {
   const nameEl=createElement("span", [name,":"],["playlist-name"]);
   const quantityEl=createElement("span",[songs.length],["num-of-song"])
   const attrs = {id:id+"pl"}
-  return createElement("div", [nameEl,"Number Of Songs:",quantityEl,"Playlist Duration:",secToDur(playlistDuration(id))], ["playlist"],attrs)
+  return createElement("li", [nameEl,"Number Of Songs:",quantityEl,"Playlist Duration:",secToDur(playlistDuration(id))], ["playlist"],attrs)
 }
 
 /**
@@ -193,7 +202,7 @@ function generateSongs(player) {
 /**
  * Inserts all playlists in the player as DOM elements into the playlists list.
  */
-const playListEl=document.getElementById("playlists")
+const playListEl=document.getElementById("playListList")
 function generatePlaylists(player) {
   for(playlist of player.playlists){
     playListEl.append(createPlaylistElement(playlist));
@@ -215,3 +224,6 @@ document.getElementById("songs").addEventListener("click" , function(event) {   
   if(event.target.className === "remove-button") removeSong(parseInt(song.id.substring(0,1)))
   if(event.target.className ==="play-button") playSong(parseInt(song.id.substring(0,1)))
 });
+
+
+// generatePlaylists(player)
