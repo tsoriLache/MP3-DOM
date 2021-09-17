@@ -108,8 +108,9 @@ function removeSong(songId) {
  */
  function addSong({ title, album, artist, duration, coverArt }) {
   checkDurationInput(duration)
+  newId=generateSongId();
   player.songs.push({
-      id: generateSongId(),
+      id: newId,
       title: title,
       album: album,
       artist: artist,
@@ -117,6 +118,9 @@ function removeSong(songId) {
       coverArt: coverArt
   })
   songEl.append(createSongElement(player.songs[player.songs.length-1]));
+  let placeAfterThisSong=player.songs.sort(sortByTitle)[(player.songs.indexOf(findSong(newId))-1)].id;
+  (document.getElementById(newId+"song")).after(document.getElementById(placeAfterThisSong+"song"))
+
 }
 
 /**
@@ -157,14 +161,15 @@ function handleAddSongEvent(event) {                            // works-need to
  * Creates a song DOM element based on a song object.
  */
 function createSongElement({ id, title, album, artist, duration, coverArt }) {
-  const nameEl=createElement("span", [title],["song-name"]);
-  const albumEl=createElement("span",[album],["album-name"])
+  const nameEl = createElement("span", [title],["song-name"]);
+  const albumEl = createElement("span",[album],["album-name"])
   const artistEl = createElement("span", [artist],["artist"]);
   const durationEl = createElement("span", ["" + secToDur(duration)] ,["duration", "short-duration"], {onclick: `console.log('${duration}')`});
-  const imgEl = createElement("img", [] ,["album-art"], {src: coverArt});
   const playEl = createElement("button",["▶"],["play-button"],{id:"playButton"});
   const deleteEl = createElement("button",["❌"],["remove-button"],{id:"deleteButton"});
-  return createElement("div", [nameEl,albumEl,"Artist: ", artistEl, "Duration: ", durationEl, imgEl,playEl,deleteEl],["song"],{id:id+"song"});
+  const imgEl = createElement("img", [] ,["album-art"], {src: coverArt});
+  const textEl = createElement("div",[nameEl,albumEl,"Artist: ", artistEl, "Duration: ", durationEl],["text"])
+  return createElement("div",  [imgEl,playEl,deleteEl,textEl],["song"],{id:id+"song"});
 }
 /**
  * Creates a playlist DOM element based on a playlist object.
@@ -236,4 +241,3 @@ document.getElementById("add-button").addEventListener("click", handleAddSongEve
 document.getElementById("songs").addEventListener("click" ,handleSongClickEvent );
 
 
-// generatePlaylists(player)
