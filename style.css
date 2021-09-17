@@ -7,7 +7,8 @@ body{
     font-size: 100%;
     background-image: url(./images/photo-1507838153414-b4b713384a76.jfif);
     background-repeat: no-repeat;
-    background-size: cover;
+    background-blend-mode:soft-light;
+    background-size:cover;
     background-color: #d4cfbf;
     margin: 0,0,0,0;
     }
@@ -57,56 +58,72 @@ h2{
     background: transparent 50%;
     overflow: hidden;
     align-self: center;
-    margin-left: 34%;
-  }
-  #inputs{
-    display: flex; 
-    flex-direction: column;
-    align-items:center;
-    justify-content : space-around;
+}
 
-  }
-  input{
-    width: 50%;
-    padding:5px;
-    margin: 5px;
-    border-radius:15px;
-    border:0;
-    box-shadow:4px 4px 10px rgba(0, 0, 0, 0.514);
-    height:50px;
-    background-color: transparent;
-    color: rgb(20, 2, 70);
-    
+input{
+  width: 50%;
+  padding:5px;
+  margin: 5px;
+  border-radius:15px;
+  border:0;
+  box-shadow:4px 4px 10px rgba(0, 0, 0, 0.514);
+  height:50px;
+  background-color:rgba(255, 228, 196, 0.493);
+  color: rgb(20, 2, 70);
+  
 }
 input:hover {
     background-color: #634d4d2f;
     border: 10px solid rgba(134, 129, 129, 0);
-  }
+}
+
+
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: rgba(8, 0, 0, 0.418);
+    color: rgba(8, 0, 0, 0.562);
     font-weight: bold;
-  }
-  #add-button {
+}
+.add-section-buttons{
+  padding:10px;
+  border:none;
+  background-color:#3f51b585;
+  color:#fff;
+  font-weight:600;
+  border-radius:5px;
+  width: 50%;
+  align-items:center;
+  margin-left: 25%;
+  margin-bottom: 2px;
+}
+.add-section-buttons:hover{
+  background-color:#3f51b5;
+}
+#add-sec-headline{
+  display: block;
+}
+.inputs{
+  display: none;
+}
+.open{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content : space-around;
+}
+.close{
+  display: none;
+}
 
-    /* remove default behavior */
-    appearance:none;
-    -webkit-appearance:none;
-  
-    /* usual styles */
-    padding:10px;
-    border:none;
-    background-color:#3f51b585;
-    color:#fff;
-    font-weight:600;
-    border-radius:5px;
-    width: 50%;
-  
-  }
-  #add-button:hover{
-    background-color:#3f51b5;
+#add-sec-headline:hover{
+  color: rgb(96, 240, 240);
+}
+#songs{
+  display: flex;
+  flex-flow: row wrap;
+  align-items:center;
 
-  }
-  .now-playing{
-    background-color: rgba(61, 199, 199, 0.315);
+  justify-content : space-around;
+}
+.now-playing{
+  background-color: rgba(61, 199, 199, 0.315);
 }

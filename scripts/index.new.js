@@ -38,7 +38,10 @@ function checkDurationInput(duration){   // checks digits(maximum is 59:59/minim
     &&duration[2]===":"&&0<=parseInt(duration[3])&&parseInt(duration[3])<6&&0<=parseInt(duration[4])
     &&parseInt(duration[4])<=9&&duration.length===5){
       return true
-    }else throw 'Duration is not in the correct format...This is the format-"mm:ss" (for example 03:13)'
+    }else {
+      alert ('Duration is not in the correct format...This is the format-"mm:ss" (for example 03:13)')
+      throw 'Duration is not in the correct format...This is the format-"mm:ss" (for example 03:13)'
+    }
 }
 
 function playlistDuration(id) {
@@ -155,6 +158,7 @@ function handleAddSongEvent(event) {                            // works-need to
   document.getElementById("artist").value=null;
   document.getElementById("duration").value=null;
   document.getElementById("cover-art").value=null;
+  toggleAddSection();
 }
 
 /**
@@ -241,3 +245,18 @@ document.getElementById("add-button").addEventListener("click", handleAddSongEve
 document.getElementById("songs").addEventListener("click" ,handleSongClickEvent );
 
 
+//making add section slide.
+let inputs = document.getElementById('inputs');
+let cancelButton = document.getElementById('cancel-button');
+let addButton = document.getElementById('add-button');
+let content = document.getElementById('content-section');
+let titleElem =  document.getElementById('add-sec-headline');
+titleElem.onclick = toggleAddSection;
+cancelButton.onclick = toggleAddSection;
+
+function toggleAddSection() {
+  inputs.classList.toggle("open");
+  addButton.classList.toggle("open");
+  cancelButton.classList.toggle("open");
+  content.classList.toggle("close");
+};
