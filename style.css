@@ -1,1 +1,112 @@
-/* Your code here */
+
+*, *:before, *:after {
+    box-sizing: border-box;
+  }
+body{
+    text-align: center;
+    font-size: 100%;
+    background-image: url(./images/photo-1507838153414-b4b713384a76.jfif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #d4cfbf;
+    margin: 0,0,0,0;
+    }
+
+.album-art{
+    border-radius: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+    margin-top: 2%;
+    width: 50%;
+    border: 2px solid rgba(84, 87, 87, 0.329);
+    padding: 2px;
+    align-items: center;
+    size: 5px;
+}
+
+
+.short-duration{
+    color: greenyellow;
+}
+.duration{
+    color: indianred;
+}
+
+span{
+    margin-right: 0;
+}
+.text{
+    -webkit-animation: moving 11s infinite;
+    animation: moving 11s infinite;
+}
+@keyframes moving {
+    from {transform: translateX(0%);}
+    to {transform: translateX(110%);}
+}
+h2{
+    display: none;
+}
+.song{
+    position: relative;
+    width: 390px;
+    padding: 10px 40px;
+    border: 1px transparent;
+    border-radius: 15px;
+    background: transparent 50%;
+    overflow: hidden;
+    align-self: center;
+    margin-left: 34%;
+  }
+  #inputs{
+    display: flex; 
+    flex-direction: column;
+    align-items:center;
+    justify-content : space-around;
+
+  }
+  input{
+    width: 50%;
+    padding:5px;
+    margin: 5px;
+    border-radius:15px;
+    border:0;
+    box-shadow:4px 4px 10px rgba(0, 0, 0, 0.514);
+    height:50px;
+    background-color: transparent;
+    color: rgb(20, 2, 70);
+    
+}
+input:hover {
+    background-color: #634d4d2f;
+    border: 10px solid rgba(134, 129, 129, 0);
+  }
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(8, 0, 0, 0.418);
+    font-weight: bold;
+  }
+  #add-button {
+
+    /* remove default behavior */
+    appearance:none;
+    -webkit-appearance:none;
+  
+    /* usual styles */
+    padding:10px;
+    border:none;
+    background-color:#3f51b585;
+    color:#fff;
+    font-weight:600;
+    border-radius:5px;
+    width: 50%;
+  
+  }
+  #add-button:hover{
+    background-color:#3f51b5;
+
+  }
+  .now-playing{
+    background-color: rgba(61, 199, 199, 0.315);
+}
