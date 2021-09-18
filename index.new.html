@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,height=device-height, initial-scale=1">
         <title>Awesome MP3 Player</title>
         <link rel="shortcut icon" type="image/x-icon" href="./images/icon.png" />
         <link rel="stylesheet" href="./style.css">
@@ -11,51 +12,31 @@
     <body>
         <h1>Awesome Player!!!</h1>
         <div id="add-section">
-            <h2>Add a new song</h2>
-            <div id="inputs">
-                <input name="title" placeholder="Title">
-                <input name="album" placeholder="Album">
-                <input name="artist" placeholder="Artist">
-                <input name="duration" placeholder="Duration (mm:ss)">
-                <input name="cover-art" placeholder="Cover art link">
+            <h2 id="add-sec-headline">Add a new song</h2>
+            <div id="inputs" class="inputs">
+                <input class="input" id="title" placeholder="Title:" required>
+                <input class="input" id="album" placeholder="Album:">
+                <input class="input" id="artist" placeholder="Artist:">
+                <input class="input" id="duration" placeholder="Duration: (mm:ss)" required>
+                <input class="input" id="cover-art" placeholder="Cover art link:">
             </div>
-            <button id="add-button">Add</button>
+            <button id="add-button" class="inputs add-section-buttons" >☑Add</button>
+            <button id="cancel-button" class="inputs add-section-buttons">Go Back⬅</button>
         </div>
-        <div id="songs">
-            <h2>Songs</h2>
-            <div class="list">
-                <!-- <div class="song">
-                    <div class="left">
-                        <img class="cover-art" src="./images/cover_art/jinjer_vortex.jpg">
-                        <div class="song-details">
-                            <span class="title">Vortex</span>
-                            <span class="album">Wallflowers</span>
-                            <span class="artist">Jinjer</span>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="song-duration">04:02</div>
-                        <div class="song-actions">
-                            <button class="play-button">Play</button>
-                            <button class="remove-button">Remove</button>
-                        </div>
-                    </div>
-                </div> -->
+        <div id=content-section class="content">
+            <div id="songs">
+                <h2>Songs</h2>
+                    <!--generated songs  -->
+            </div>
+            <div id="playlists">
+                <h2>Playlists</h2>
+                <ul id="playListList" class="list">
+                    <!-- generated playlists -->
+                </ul>
             </div>
         </div>
-        <div id="playlists">
-            <h2>Playlists</h2>
-            <div class="list">
-                <!-- <div class="playlist">
-                    <div class="left">
-                        <span class="name">Metal</span>
-                    </div>
-                    <div class="right">
-                        <span class="playlist-length">4 songs</span>
-                        <span class="playlist-duration">25:36</span>
-                    </div>
-                </div> -->
-            </div>
+        <div id="playing-section">
+            <!-- generated now playing element -->
         </div>
     </body>
 </html>
