@@ -1,82 +1,45 @@
-# MP3 DOM
+# MP3 Player :
+this project suppose to demonstrate simple MP3 Player.
 
-The users of your MP3 player complained about it being inconvenient for regular (non-programmer) people. Time to build a GUI!
+![](https://user-images.githubusercontent.com/89573774/132813316-8c310d9f-ef3a-4223-bf49-b59422ba651a.png)
 
-Your task is to create a webpage that conveniently displays the songs and playlists in a player object. The player object will have the same structure as in your previous assignment.
+## Basic functions you should know about:
 
-## General Instructions
+ `playSong` -
+ 
+  <img src="https://user-images.githubusercontent.com/89573774/133909649-294541e5-952e-4008-9532-735cc4e687e2.png" width="200" height="200" />
+  
+ `removeSong` -
+ 
+  <img src="https://user-images.githubusercontent.com/89573774/133909697-ce983c9a-a006-44b7-8817-959ef1fb5780.png" width="200" height="200" />
 
-1. Fork this repo into your account.
-2. Clone the forked repo to your computer.
-3. Create a new git branch for your work.
-4. Complete the requirements.
-5. Submit your work.
-6. May the odds be ever in your favor!
+ `addSong` - 
+ 
+  <img src="https://user-images.githubusercontent.com/89573774/133909818-c8577e5c-1e0c-4109-a00d-8a1f7479f6dc.png" width="200" />
+  <img src="https://user-images.githubusercontent.com/89573774/133909825-f51ff96e-18c3-4564-b856-3cd40adeadbf.png" width="200" height="200" />
 
-## New Requirements!
-- There is now a section for adding new songs to the player. Make it work!
-- Add a play button to every song. Clicking it will play that song.
-- Add a remove button to every song. Clicking it will remove the song from the playlist.
-- There should be only one event listener on the entire songs list, that handles all play and remove events of songs.
-- You are given new template files to use: `index.new.html` and `index.new.js`.
+__Note__: The functions are not yet merge to the main branch.
 
-## Webpage Requirements
 
-Your webpage should contain 2 lists:
+## Additions
+- `shufflePlaylist` -play any playlist in random order.
 
--   A list of the `songs` in the player, sorted by their titles
--   A list of the `playlists` in the player, sorted by their names
+![image](https://user-images.githubusercontent.com/89573774/133909960-10fe97b3-3ac2-4883-a1e2-1a8b4300a58f.png)
 
-### Songs
 
-Each song list item shall display the following details:
 
--   song `title`
--   `album` name
--   `artist` name
--   an image with the album's cover art (`coverArt`)
--   song `duration` (in `mm:ss` format, of course)
+__Note__: The functions are not yet merge to the main branch.
 
-One song can be played at a time. There should be some indication of the currently playing song (the specific indication is up to you). Clicking on a song will change the indication of the currently playing song. We have already provided code that handles the click event for you.
+## bugs /errors
+![image](https://user-images.githubusercontent.com/89573774/133910054-30355550-ca5b-4615-831c-f19f64375a32.png)
 
-### Playlists
+  in the now playing section you can see the song currently playing.
+  the problem is that it has the sme id as the song elemet itself.
+  and also you see there the buttons but they don't work
+  
+  - there is no option to pause a song.
 
-Every playlist list item should display the following information:
 
--   playlist `name`
--   the number of songs in the playlist
--   the total duration of the playlist
 
-## Bonus Requirements
+### If you have anything to add or comment I would love it.
 
--   After a song begins to play, it automatically switches to the next one when the song duration has passed.
--   The color of the durations of songs should reflect their length. A duration of less than 2 min will show green, and will be gradually redder until it is completely red for durations that are above 7 min.
--   When a song is removed, all playlists in the page will also be updated.
--   When adding a new song, the songs list will remain sorted by title.
--   Anything else you can think of...
-
-## Technical Instructions
-
-You are provided with a template for your project:
-
--   an HTML file (`index.html`)
--   a linked, empty CSS file (`style.css`)
--   a linked JS script with a sample `player` object (`player.js`)
--   a linked JS script with a template for your code (`index.js`)
--   an `images` folder with the webpage icon and song cover art
-
-The HTML defines the basic structure of the page. There are 2 container elements - one for the songs and one for the playlists. You may add more structural elements to the HTML (headings etc.), but the songs and playlists themselves must be generated using JS, based on the `player` object.
-
-## Submission
-
-1. On GitHub, open a pull request from your branch to the main branch.
-2. **Do not merge the pull request!**
-3. Add the user `Cyber4sPopo` as collaborator to your repo.
-4. Submit a link to the pull request in Google Classroom.
-
-## Additional Remarks
-
--   **Avoid duplication!** Use JS functions and CSS classes wisely.
--   Maintain high coding standards. Keep your code readable, indented properly, commented and indicative.
--   Maintain a proper git workflow. Commit often, push often, write informative commit messages.
--   You are free to style your webpage however you like. Make it BEAUTIFUL!
