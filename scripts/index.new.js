@@ -72,25 +72,24 @@ function sortByTitle(a, b) {
 }
 
 /**
- * Plays a song from the player.
- * Playing a song means changing the visual indication of the currently playing song.
- *
- * @param {Number} songId - the ID of the song to play
- */
- let lastSongPlayed;
- function playSong(songId) {
-     try{
-     lastSongPlayed.classList.remove("now-playing");
-     }finally{
-     const songElement=document.getElementById(songId+"song")
-     const song=findSong(songId);
-     songElement.classList.add("now-playing");
-     setTimeout(()=>songElement.classList.remove("now-playing"),song.duration*1000);
-     setTimeout(()=>playSong(player.songs[(player.songs.indexOf(song)+1)].id),song.duration*1000);
-     lastSongPlayed=songElement;
-     }
- }
-
+* Plays a song from the player.
+* Playing a song means changing the visual indication of the currently playing song.
+*
+* @param {Number} songId - the ID of the song to play
+*/
+let lastSongPlayed;
+function playSong(songId) {
+ try{
+   lastSongPlayed.classList.remove("now-playing");
+ }finally{
+   const songElement=document.getElementById(songId+"song")
+   const song=findSong(songId);
+   songElement.classList.add("now-playing");
+   setTimeout(()=>songElement.classList.remove("now-playing"),song.duration*1000);
+   setTimeout(()=>playSong(player.songs[(player.songs.indexOf(song)+1)].id),song.duration*1000);
+   lastSongPlayed=songElement;
+   }
+}
 /**
  * Removes a song from the player, and updates the DOM to match.
  *
@@ -108,8 +107,8 @@ function removeSong(songId) {
 
 /**
  * Adds a song to the player, and updates the DOM to match.
- */
- function addSong({ title, album, artist, duration, coverArt }) {
+*/
+function addSong({ title, album, artist, duration, coverArt }) {
   checkDurationInput(duration)
   newId=generateSongId();
   player.songs.push({
@@ -133,12 +132,12 @@ function removeSong(songId) {
  * @param {MouseEvent} event - the click event
  */
 function handleSongClickEvent(event) {      // works-need to be written better
-  if (event.target.className != "remove-button"){
-    if(event.target.className !="play-button")return;
-  } 
+  // if (event.target.className != "remove-button"){
+  //   if(event.target.className !="play-button")return;
+  // } 
   let song = event.target.closest(".song");
-  if(event.target.className === "remove-button") removeSong(parseInt(song.id.substring(0,1)))
-  if(event.target.className ==="play-button") playSong(parseInt(song.id.substring(0,1)))
+  if(event.target.id === "deleteButton") removeSong(parseInt(song.id.substring(0,1)))
+  if(event.target.id ==="playButton") playSong(parseInt(song.id.substring(0,1)))
 }
 
 /**
@@ -169,20 +168,22 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
   const albumEl = createElement("span",[album],["album-name"])
   const artistEl = createElement("span", [artist],["artist"]);
   const durationEl = createElement("span", ["" + secToDur(duration)] ,["duration", "short-duration"], {onclick: `console.log('${duration}')`});
-  const playEl = createElement("button",["▶"],["play-button"],{id:"playButton"});
-  const deleteEl = createElement("button",["❌"],["remove-button"],{id:"deleteButton"});
+  const playEl = createElement("button",["▶"],["song-button","play-button"],{id:"playButton"});
+  const deleteEl = createElement("button",["❌"],["song-button","remove-button"],{id:"deleteButton"});
+  const buttonsOverly = createElement("p",[playEl,deleteEl],["overlay"])
   const imgEl = createElement("img", [] ,["album-art"], {src: coverArt});
   const textEl = createElement("div",[nameEl,albumEl,"Artist: ", artistEl, "Duration: ", durationEl],["text"])
-  return createElement("div",  [imgEl,playEl,deleteEl,textEl],["song"],{id:id+"song"});
+  return createElement("div",  [imgEl,buttonsOverly,textEl],["song"],{id:id+"song"});
 }
 /**
  * Creates a playlist DOM element based on a playlist object.
  */
 function createPlaylistElement({ id, name, songs }) {
   const nameEl=createElement("span", [name,":"],["playlist-name"]);
-  const quantityEl=createElement("span",[songs.length],["num-of-song"])
+  const quantityEl=createElement("span",[songs.length,"songs"],["num-of-song"])
+  const duration=createElement("span", [secToDur(playlistDuration(id))],["playlist-duration"])
   const attrs = {id:id+"pl"}
-  return createElement("li", [nameEl,"Number Of Songs:",quantityEl,"Playlist Duration:",secToDur(playlistDuration(id))], ["playlist"],attrs)
+  return createElement("li", [nameEl,"\t",quantityEl,duration], ["playlist"],attrs)
 }
 
 /**
