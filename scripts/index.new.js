@@ -1,4 +1,5 @@
-/*support functions */
+/*support functions: */
+
 function findSong(id,mPlayer=player){ 
   for(let song of mPlayer.songs){
     if (song.id===id){
@@ -23,7 +24,7 @@ function generateSongId(){
   return newSongId;
 }
 
-function secToDur(sec){
+function secondsToDuration(sec){
   return((Math.floor(sec/60))<10? "0": "")+`${Math.floor(sec/60)}:` +((sec%60)<10? "0": "")+`${sec%60}`
 }
 
@@ -33,7 +34,7 @@ function durationToSeconds(duration){
           +parseInt(duration[3]*10)+parseInt(duration[4])
 }
 
-function checkDurationInput(duration){   // checks digits(maximum is 59:59/minimum is 00:00),:,length.
+function checkDurationInput(duration){   // checks the duration format (digits(maximum is 59:59/minimum is 00:00),:,length)
   if(0<=parseInt(duration[0])&&parseInt(duration[0])<6&&0<=parseInt(duration[1])&&parseInt(duration[1])<=9
     &&duration[2]===":"&&0<=parseInt(duration[3])&&parseInt(duration[3])<6&&0<=parseInt(duration[4])
     &&parseInt(duration[4])<=9&&duration.length===5){
@@ -52,7 +53,7 @@ function playlistDuration(id) {
   return (plDuration);          
 }
 
-function updatePlaylist(){
+function updatePlaylist(){      // used to update playlist after deleting songs
   const list = document.getElementById("playListList");
   while (list.hasChildNodes()) {  
     list.removeChild(list.firstChild);
@@ -89,8 +90,8 @@ function playSong(songId,auto=true) {
    setTimeout(()=>songElement.classList.remove("now-playing"),song.duration*1000);
    if(auto) setTimeout(()=>playSong(player.songs[(player.songs.indexOf(song)+1)].id),song.duration*1000);
    lastSongPlayed=songElement;
-   document.getElementById("playing").append(createElement("span",[createSongElement(song)],[],{id:"playing-sec"}))
-   }
+   document.getElementById("playing-section").append(createElement("h1",["NOW PLAYING:",createSongElement(song)],[],{id:"playing-sec"}))
+  }
 }
 /**
  * Removes a song from the player, and updates the DOM to match.
@@ -114,17 +115,20 @@ function addSong({ title, album, artist, duration, coverArt }) {
   checkDurationInput(duration)
   newId=generateSongId();
   player.songs.push({
-      id: newId,
-      title: title,
-      album: album,
-      artist: artist,
-      duration: durationToSeconds(duration),
-      coverArt: coverArt
+    id: newId,
+    title: title,
+    album: album,
+    artist: artist,
+    duration: durationToSeconds(duration),
+    coverArt: coverArt
   })
-  songEl.append(createSongElement(player.songs[player.songs.length-1]));
+  document.getElementById("songs").append(createSongElement(player.songs[player.songs.length-1]));
+
+    /*
+    tried to make the song remain sorted by title:
   let placeAfterThisSong=player.songs.sort(sortByTitle)[(player.songs.indexOf(findSong(newId))-1)].id;
   (document.getElementById(newId+"song")).after(document.getElementById(placeAfterThisSong+"song"))
-
+  */
 }
 
 /**
@@ -133,7 +137,7 @@ function addSong({ title, album, artist, duration, coverArt }) {
  *
  * @param {MouseEvent} event - the click event
  */
-function handleSongClickEvent(event) {      // works-need to be written better
+function handleSongClickEvent(event) {      
   let song = event.target.closest(".song");
   if(event.target.id === "deleteButton") removeSong(parseInt(song.id.substring(0,1)))
   if(event.target.id ==="playButton") playSong(parseInt(song.id.substring(0,1)))
@@ -171,7 +175,7 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
   const nameEl = createElement("span", [title],["song-name"]);
   const albumEl = createElement("span",[album],["album-name"])
   const artistEl = createElement("span", [artist],["artist"]);
-  const durationEl = createElement("span", ["" + secToDur(duration)] ,["duration", "short-duration"], {onclick: `console.log('${duration}')`});
+  const durationEl = createElement("span", ["" + secondsToDuration(duration)] ,["duration", "short-duration"], {onclick: `console.log('${duration}')`});
   const playEl = createElement("button",["▶"],["song-button","play-button"],{id:"playButton"});
   const deleteEl = createElement("button",["❌"],["song-button","remove-button"],{id:"deleteButton"});
   const buttonsOverly = createElement("p",[playEl,deleteEl],["overlay"])
@@ -179,19 +183,17 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
   const textEl = createElement("div",[nameEl,albumEl,"Artist: ", artistEl, "Duration: ", durationEl],["text"])
   return createElement("div",  [imgEl,buttonsOverly,textEl],["song"],{id:id+"song"});
 }
+
 /**
  * Creates a playlist DOM element based on a playlist object.
  */
 function createPlaylistElement({ id, name, songs }) {
   const songsNamesArr = [];
-  function songsNames(id){
-    songsNamesArr.push(findSong(id).title)
-  }
-  songs.forEach(songsNames)
+  songs.forEach((id)=>songsNamesArr.push(findSong(id).title))
   const nameEl = createElement("span", [name,":"],["playlist-name"]);
   const quantityEl = createElement("span",[songs.length,"songs"],["num-of-song"],{id:"num-of-songs"})
   const songsNameEl =  createElement("span",[songsNamesArr],["hide"])
-  const durationEl = createElement("span", [secToDur(playlistDuration(id))],["playlist-duration"])
+  const durationEl = createElement("span", [secondsToDuration(playlistDuration(id))],["playlist-duration"])
   const shuffleEL = createElement("button",["🔀"],["shuffle-button"],{id:"shuffle-button"});
   const sideEl = createElement("span",[quantityEl,songsNameEl,durationEl,shuffleEL],["side-el"])
   const attrs = {id:id+"pl"}
@@ -253,11 +255,11 @@ generatePlaylists(player)
 document.getElementById("add-button").addEventListener("click", handleAddSongEvent)
 //Making the play and delete buttons actually do something
 document.getElementById("songs").addEventListener("click" ,handleSongClickEvent );
-//Making shuffle button work
+//Making shuffle button actually do something
 document.getElementById("playlists").addEventListener("click" ,handlePlaylistClickEvent );
 
 
-//making add section slide.
+//making add section slide.                                       **Needs to be rewritten!!!
 let inputs = document.getElementById('inputs');
 let cancelButton = document.getElementById('cancel-button');
 let addButton = document.getElementById('add-button');
@@ -265,7 +267,6 @@ let content = document.getElementById('content-section');
 let titleElem =  document.getElementById('add-sec-headline');
 titleElem.onclick = toggleAddSection;
 cancelButton.onclick = toggleAddSection;
-
 function toggleAddSection() {
   inputs.classList.toggle("open");
   addButton.classList.toggle("open");
