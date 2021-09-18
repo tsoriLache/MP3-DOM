@@ -78,7 +78,7 @@ function sortByTitle(a, b) {
 * @param {Number} songId - the ID of the song to play
 */
 let lastSongPlayed;
-function playSong(songId) {
+function playSong(songId,auto=true) {
  try{
    lastSongPlayed.classList.remove("now-playing");
  }finally{
@@ -86,7 +86,7 @@ function playSong(songId) {
    const song=findSong(songId);
    songElement.classList.add("now-playing");
    setTimeout(()=>songElement.classList.remove("now-playing"),song.duration*1000);
-   setTimeout(()=>playSong(player.songs[(player.songs.indexOf(song)+1)].id),song.duration*1000);
+   if(auto) setTimeout(()=>playSong(player.songs[(player.songs.indexOf(song)+1)].id),song.duration*1000);
    lastSongPlayed=songElement;
    }
 }
@@ -132,14 +132,16 @@ function addSong({ title, album, artist, duration, coverArt }) {
  * @param {MouseEvent} event - the click event
  */
 function handleSongClickEvent(event) {      // works-need to be written better
-  // if (event.target.className != "remove-button"){
-  //   if(event.target.className !="play-button")return;
-  // } 
   let song = event.target.closest(".song");
   if(event.target.id === "deleteButton") removeSong(parseInt(song.id.substring(0,1)))
   if(event.target.id ==="playButton") playSong(parseInt(song.id.substring(0,1)))
 }
 
+function handlePlaylistClickEvent(event){
+  if (event.target.className != "shuffle-button")return;
+  let playlist = event.target.closest(".playlist");
+  if(event.target.id === "shuffle-button") shufflePlaylist(parseInt(playlist.id.substring(0,1)))
+}
 /**
  * Handles a click event on the button that adds songs.
  *
@@ -179,11 +181,19 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
  * Creates a playlist DOM element based on a playlist object.
  */
 function createPlaylistElement({ id, name, songs }) {
-  const nameEl=createElement("span", [name,":"],["playlist-name"]);
-  const quantityEl=createElement("span",[songs.length,"songs"],["num-of-song"])
-  const duration=createElement("span", [secToDur(playlistDuration(id))],["playlist-duration"])
+  const songsNamesArr = [];
+  function songsNames(id){
+    songsNamesArr.push(findSong(id).title)
+  }
+  songs.forEach(songsNames)
+  const nameEl = createElement("span", [name,":"],["playlist-name"]);
+  const quantityEl = createElement("span",[songs.length,"songs"],["num-of-song"],{id:"num-of-songs"})
+  const songsNameEl =  createElement("span",[songsNamesArr],["hide"])
+  const durationEl = createElement("span", [secToDur(playlistDuration(id))],["playlist-duration"])
+  const shuffleEL = createElement("button",["🔀"],["shuffle-button"],{id:"shuffle-button"});
+  const sideEl = createElement("span",[quantityEl,songsNameEl,durationEl,shuffleEL],["side-el"])
   const attrs = {id:id+"pl"}
-  return createElement("li", [nameEl,"\t",quantityEl,duration], ["playlist"],attrs)
+  return createElement("li", [nameEl,sideEl], ["playlist"],attrs)
 }
 
 /**
@@ -241,9 +251,10 @@ generateSongs(player)
 generatePlaylists(player)
 // Making the add-song-button actually do something
 document.getElementById("add-button").addEventListener("click", handleAddSongEvent)
-
 //Making the play and delete buttons actually do something
 document.getElementById("songs").addEventListener("click" ,handleSongClickEvent );
+//Making shuffle button work
+document.getElementById("playlists").addEventListener("click" ,handlePlaylistClickEvent );
 
 
 //making add section slide.
@@ -261,3 +272,24 @@ function toggleAddSection() {
   cancelButton.classList.toggle("open");
   content.classList.toggle("close");
 };
+
+
+/**additions:**/
+
+function shufflePlaylist(id){
+  let shuffleArr=[];
+  let indexArr=[];
+  let randomIndex;
+  for(let i=0;i<findPlaylist(id).songs.length;i++){
+    indexArr.push(i);
+  }
+  while(indexArr.length!==0){
+    randomIndex=Math.floor(Math.random() * indexArr.length)
+    shuffleArr.push(findPlaylist(id).songs[indexArr[randomIndex]])
+    indexArr.splice(randomIndex,1)
+  }
+  console.log(shuffleArr)
+  for(let song of shuffleArr){
+    playSong(song,false)
+  }
+}
