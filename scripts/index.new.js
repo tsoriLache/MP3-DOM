@@ -81,6 +81,7 @@ let lastSongPlayed;
 function playSong(songId,auto=true) {
  try{
    lastSongPlayed.classList.remove("now-playing");
+   document.getElementById("playing-sec").remove();
  }finally{
    const songElement=document.getElementById(songId+"song")
    const song=findSong(songId);
@@ -88,6 +89,7 @@ function playSong(songId,auto=true) {
    setTimeout(()=>songElement.classList.remove("now-playing"),song.duration*1000);
    if(auto) setTimeout(()=>playSong(player.songs[(player.songs.indexOf(song)+1)].id),song.duration*1000);
    lastSongPlayed=songElement;
+   document.getElementById("playing").append(createElement("span",[createSongElement(song)],[],{id:"playing-sec"}))
    }
 }
 /**
@@ -229,20 +231,18 @@ function createElement(tagName, children = [], classes = [], attributes = {}, ev
 /**
  * Inserts all songs in the player as DOM elements into the songs list.
  */
-const songEl=document.getElementById("songs") 
 function generateSongs(player) {
   for(song of player.songs.sort(sortByTitle)){
-    songEl.append(createSongElement(song));
+    document.getElementById("songs").append(createSongElement(song));
   }
 }
 
 /**
  * Inserts all playlists in the player as DOM elements into the playlists list.
  */
-const playListEl=document.getElementById("playListList")
 function generatePlaylists(player) {
   for(playlist of player.playlists){
-    playListEl.append(createPlaylistElement(playlist));
+    document.getElementById("playListList").append(createPlaylistElement(playlist));
   }
 }
 
